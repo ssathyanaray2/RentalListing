@@ -5,7 +5,7 @@ import rentsalsRouter from './routes/rentals.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const port = process.env.PORT || 8000;
+const port = process.env.SERVER_PORT || 8000;
 
 const app = express();
 
