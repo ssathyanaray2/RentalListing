@@ -1,0 +1,7 @@
+FROM node:latest
+WORKDIR  /app
+COPY rental-ui/package*.json ./
+RUN npm install
+COPY /rental-ui ./
+EXPOSE 3000
+CMD ["npm", "run", "dev"] 
