@@ -75,7 +75,26 @@ Backend: http://localhost:8000
 
 3) Dynamic Image Uploads: As of now I have used a generic image for all the listing, if the application is deployed in AWS, S3 can be used to store and retrieve images efficiently and securely.
 
-4) AWS Deployment & Architecture: The application can be deployed in AWS. I have designed an AWS architecture diagram to demonstrate deployment strategy and showcase my cloud skills.
+4) AWS Architecture and CI/CD:
+
+   Outlining a simple architecture plan for the app in AWS, along with some ideas for CI/CD
+
+   1) EC2: We can use AWS EC2 to deploy the web app, and utilize application load balancer (ALB) for scaling.
+      
+   2) Route 53: For custom domain and DNS routing.
+      
+   3) Aurora: It is AWS managed MySQL DB engine. Its a bit pricey, so if cost is a factor, we can use MySQL DB.
+      
+   4) S3: User media like images and videos can be stored in S3.
+
+   CI/CD
+
+    5) Github Actions: To run tests and create docker image which can be pushed to Elastic container registry (ECR).
+       
+    6) Lambda Deployment Trigger: Use an AWS Lambda function to pull the latest image from ECR and deploy it on the EC2 instance, automating the deployment step.
+
+
+
 -----------------------------------------------------------------------
 
 
