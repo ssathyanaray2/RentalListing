@@ -9,6 +9,8 @@ services:
       - "3306:3306"
     networks:
       - webappnet
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
     build: ./server
