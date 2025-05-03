@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    networks:
+      - webappnet
+
+  backend:
+    build: ./server
+    container_name: rental-backend
+    ports:
+      - "8000:8000"
+    env_file: ./server/.env
+    depends_on:
+      - mysql
+    networks:
+      - webappnet
+
+  frontend:
+    build: ./client
+    container_name: rental-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - webappnet
+
+volumes:
+  mysql-data:
+  
+networks:
+  webappnet:
