@@ -1,16 +1,30 @@
 import { useState } from "react";
 import { Button, Box, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import dotenv from "dotenv";
 
 export default function NewRentalForm() {
     const [listingDetails, setListingDetails] = useState([]);
     const navigate = useNavigate();
-    dotenv.config();
+    const url = import.meta.env.VITE_API_URL;
 
     const handleSubmit = () => {
         
-        fetch("http://"+process.env.SERVER_HOST+":"+process.env.SERVER_PORT+"/api/rentals", {
+        if (!listingDetails.listingTitle || !listingDetails.rent || !listingDetails.address || !listingDetails.numberOfRooms  || !listingDetails.contactInfo) {
+            alert("Please fill all the required fields.");
+            return;
+        }
+
+        if(listingDetails.listingTitle.trim() === "" || listingDetails.address.trim() === "" || listingDetails.contactInfo.trim() === ""){
+            alert("Please fill all the required fields.");
+            return;
+        }
+
+        if (isNaN(listingDetails.rent) || listingDetails.rent <= 0 || listingDetails.numberOfRooms <= 0|| isNaN(listingDetails.numberOfRooms)) {
+            alert("Rent and Number of Rooms should be numbers greater than zero");
+            return;
+        }
+    
+        fetch(url, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(listingDetails)
@@ -24,6 +38,7 @@ export default function NewRentalForm() {
                 alert("Sorry, there was ann error while creating new listing.");
             }
         })
+        
     }
 
     return (
@@ -37,7 +52,7 @@ export default function NewRentalForm() {
             </Typography>
             </Box>
             <Box sx={{ display: "flex", flexDirection: "column", width: "40%", padding: "2%", gap: 3 }}>
-                <TextField id="title" label="Title" variant="outlined" onChange={(e) => { setListingDetails((prev) => ({
+                <TextField id="title" label="Title" variant="outlined" required onChange={(e) => { setListingDetails((prev) => ({
                     ...prev,
                     listingTitle:e.target.value
                 }))}}/>
@@ -47,20 +62,20 @@ export default function NewRentalForm() {
                         description:e.target.value
                     }))
                 }}/>
-                <TextField id="rent" label="Rent" variant="outlined" onChange={(e) => {setListingDetails((prev) => ({
+                <TextField id="rent" label="Rent" variant="outlined" required onChange={(e) => {setListingDetails((prev) => ({
                     ...prev,
                     rent:e.target.value
                 }))}}/>
-                <TextField multiline rows={4} id="address" label="Address" variant="outlined"  onChange={(e) => {
+                <TextField multiline rows={4} id="address" label="Address" variant="outlined" required onChange={(e) => {
                     setListingDetails((prev) => ({
                     ...prev,
                     address:e.target.value
                 }))}}/>
-                <TextField id="numberofrooms" label="Number of Rooms" variant="outlined" onChange={(e) => setListingDetails((prev) => ({
+                <TextField id="numberofrooms" label="Number of Rooms" variant="outlined" required onChange={(e) => setListingDetails((prev) => ({
                     ...prev,
                     numberOfRooms:e.target.value
                 }))}/>
-                <TextField id="Email" label="Email" variant="outlined" onChange={(e) => setListingDetails((prev) => ({
+                <TextField id="Email" label="Email" variant="outlined" required onChange={(e) => setListingDetails((prev) => ({
                     ...prev,
                     contactInfo:e.target.value
                 }))}/>
