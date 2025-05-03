@@ -94,7 +94,7 @@ Backend: http://localhost:8000
     6) Lambda Deployment Trigger: Use an AWS Lambda function to pull the latest image from ECR and deploy it on the EC2 instance, automating the deployment step.
 
 
-
+    ![alt text](RentalListing.jpg)
 -----------------------------------------------------------------------
 
 
