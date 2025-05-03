@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import dotenv from "dotenv";
 
 export default function ListRentals() {
     const [rentals, setRentals] = useState([]);
     const navigate = useNavigate();
+    dotenv.config();
 
     useEffect(() => {
-        fetch("http://localhost:8000/api/rentals")
+        fetch("http://"+process.env.SERVER_HOST+":"+process.env.SERVER_PORT+"/api/rentals")
             .then(response => response.json())
             .then(data => setRentals(data))
             .catch(error => console.error("Error fetching rentals:", error));

@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { Button, Box, TextField, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import dotenv from "dotenv";
 
 export default function NewRentalForm() {
     const [listingDetails, setListingDetails] = useState([]);
     const navigate = useNavigate();
+    dotenv.config();
 
     const handleSubmit = () => {
-        fetch("http://localhost:8000/api/rentals", {
+        
+        fetch("http://"+process.env.SERVER_HOST+":"+process.env.SERVER_PORT+"/api/rentals", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(listingDetails)
